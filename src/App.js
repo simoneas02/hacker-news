@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 
-const list = [
-    {
-      title : 'Keep and going',
-      url: 'dsdaad',
-      author: 'dsds',
-      comments: 4,
-      points: 3,
-      objectId: 0
-    },
-    {
-      title : 'Keep and wqwqw',
-      url: 'dsdaad',
-      author: 'dsds',
-      comments: 2,
-      points: 5,
-      objectId: 1
-    }
-];
+import List from './List';
+import Search from './Search';
 
-const isSearchTerm = searchTerm => item => item.title.toLowerCase().includes(searchTerm.toLowerCase());
+const list = [
+  {
+    title : "You Don't Know JS: Up & Going",
+    url: 'https://github.com/getify/You-Dont-Know-JS/blob/master/up%20&%20going/README.md#you-dont-know-js-up--going',
+    author: 'Kyle Simpson',
+    comments: 4,
+    points: 3,
+    objectId: 0
+  },
+  {
+    title : "You Don't Know JS:  Scope & Closures",
+    url: 'https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20&%20closures/README.md#you-dont-know-js-scope--closures',
+    author: 'Kyle Simpson',
+    comments: 2,
+    points: 5,
+    objectId: 1
+  }
+];
 
 class App extends Component {
   constructor ( props ) {
@@ -31,7 +32,7 @@ class App extends Component {
     };
 
     this.onDimiss = this.onDimiss.bind(this);
-    this.onDimiss = this.onSearchChange.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
   }
 
   onDimiss ( id ) {
@@ -45,32 +46,22 @@ class App extends Component {
   }
 
   render() {
+    const { title, list, searchTerm } = this.state;
     return (
       <div>
-        <h1>{ this.state.title }</h1>
+        <h1>{ title }</h1>
+        <Search
+          value={ searchTerm }
+          onChange={ this.onSearchChange }
+        >
+          Search
+        </Search>
 
-        <form>
-          <input 
-            type='text'
-            onChange={ this.onSearchChange }
-            value={ this.state.searchTerm }
-          />
-        </form>
-
-        {this.state.list.filter( isSearchTerm ( this.state.searchTerm ) ).map( item =>
-          <div key={ item.objectId }>
-            <h2><a href={ item.url }>{ item.title }</a></h2>
-            <p>{ item.author }</p>
-            <p>{ item.comments }</p>
-            <span>{ item.points }</span>
-            <button 
-              onClick={ () => this.onDimiss( item.objectId ) } 
-              type='button'
-            >
-              Dimiss
-            </button>
-          </div>
-        )}
+        <List
+          list={ list }
+          pattern={ searchTerm }
+          onDimiss={ this.onDimiss }
+        />
       </div>
     );
   }
