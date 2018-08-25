@@ -46,7 +46,12 @@ class App extends Component {
   }
 
   render() {
-    const { title, list, searchTerm } = this.state;
+    const { 
+      title, 
+      list, 
+      searchTerm 
+    } = this.state;
+    
     return (
       <div>
         <h1>{ title }</h1>
