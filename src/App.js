@@ -3,40 +3,40 @@ import React, { Component } from 'react';
 import List from './List';
 import Search from './Search';
 
-const list = [
-  {
-    title : "You Don't Know JS: Up & Going",
-    url: 'https://github.com/getify/You-Dont-Know-JS/blob/master/up%20&%20going/README.md#you-dont-know-js-up--going',
-    author: 'Kyle Simpson',
-    comments: 4,
-    points: 3,
-    objectId: 0
-  },
-  {
-    title : "You Don't Know JS:  Scope & Closures",
-    url: 'https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20&%20closures/README.md#you-dont-know-js-scope--closures',
-    author: 'Kyle Simpson',
-    comments: 2,
-    points: 5,
-    objectId: 1
-  }
-];
+const DEFAULT_QUERY='redux';
+const PATH_BASE='https://hn.algolia.com/api/v1';
+const PATH_SEARCH='/search';
+const PARAM_SEARCH='query=';
 
 class App extends Component {
   constructor ( props ) {
     super(props);
     this.state = {
       title: 'My Title',
-      list,
-      searchTerm: ''
+      result: null,
+      searchTerm: DEFAULT_QUERY,
     };
 
+    this.setSearchTopStories = this.setSearchTopStories.bind(this);
     this.onDimiss = this.onDimiss.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
   }
 
+  setSearchTopStories(result) {
+    this.setState({ result });
+  }
+
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+      .then(response => response.json())
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => error);
+}
+
+
   onDimiss ( id ) {
-    const isNotId = item => item.objectId !== id;
+    const isNotId = item => item.objectID !== id;
     const updateList = this.state.list.filter( isNotId );
     this.setState({ list: updateList });
   }
@@ -48,10 +48,12 @@ class App extends Component {
   render() {
     const { 
       title, 
-      list, 
-      searchTerm 
+      searchTerm,
+      result 
     } = this.state;
     
+    if (!result) { return null; }
+
     return (
       <div>
         <h1>{ title }</h1>
@@ -63,7 +65,7 @@ class App extends Component {
         </Search>
 
         <List
-          list={ list }
+          list={ result.hits }
           pattern={ searchTerm }
           onDimiss={ this.onDimiss }
         />
