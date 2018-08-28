@@ -14,7 +14,7 @@ class App extends Component {
     this.state = {
       title: 'My Title',
       result: null,
-      searchTerm: DEFAULT_QUERY,
+      searchTerm: DEFAULT_QUERY
     };
 
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
@@ -34,11 +34,10 @@ class App extends Component {
       .catch(error => error);
 }
 
-
   onDimiss ( id ) {
     const isNotId = item => item.objectID !== id;
-    const updateList = this.state.list.filter( isNotId );
-    this.setState({ list: updateList });
+    const updateList = this.state.result.hits.filter( isNotId );
+    this.setState({ result: { ...this.state.result, hits: updateList } });
   }
 
   onSearchChange = ( event ) => {
@@ -57,6 +56,7 @@ class App extends Component {
     return (
       <div>
         <h1>{ title }</h1>
+
         <Search
           value={ searchTerm }
           onChange={ this.onSearchChange }
