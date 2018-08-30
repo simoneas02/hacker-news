@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import List from './List';
-import Search from './Search';
+import List from "./List";
+import Search from "./Search";
 
-const DEFAULT_QUERY='redux';
-const PATH_BASE='https://hn.algolia.com/api/v1';
-const PATH_SEARCH='/search';
-const PARAM_SEARCH='query=';
+const DEFAULT_QUERY = "redux";
+const PATH_BASE = "https://hn.algolia.com/api/v1";
+const PATH_SEARCH = "/search";
+const PARAM_SEARCH = "query=";
 
 class App extends Component {
-  constructor ( props ) {
+  constructor(props) {
     super(props);
     this.state = {
-      title: 'My Title',
+      title: "My Title",
       result: null,
       searchTerm: DEFAULT_QUERY
     };
@@ -24,15 +24,6 @@ class App extends Component {
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
   }
 
-  setSearchTopStories(result) {
-    this.setState({ result });
-  }
-
-  onSearchSubmit() {
-    const { searchTerm } = this.state; 
-    this.fetchSearchTopStories(searchTerm);
-  }
-
   fetchSearchTopStories(searchTerm) {
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
       .then(response => response.json())
@@ -40,52 +31,52 @@ class App extends Component {
       .catch(error => error);
   }
 
-
   componentDidMount() {
-    const { searchTerm } = this.state; 
+    const { searchTerm } = this.state;
     this.fetchSearchTopStories(searchTerm);
-}
+  }
 
-  onDimiss ( id ) {
+  onSearchSubmit(event) {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+    event.preventDefault();
+  }
+
+  onSearchChange(event) {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+  }
+
+  setSearchTopStories(result) {
+    this.setState({ result });
+  }
+
+  onDimiss(id) {
     const isNotId = item => item.objectID !== id;
-    const updateList = this.state.result.hits.filter( isNotId );
+    const updateList = this.state.result.hits.filter(isNotId);
     this.setState({ result: { ...this.state.result, hits: updateList } });
   }
 
-  onSearchChange =  event => {
-    const { searchTerm } = this.state;
-    this.fetchSearchTopStories(searchTerm);
-    
-  }
-
   render() {
-    const { 
-      title, 
-      searchTerm,
-      result 
-    } = this.state;
-    
-    if (!result) { return null; }
+    const { title, searchTerm, result } = this.state;
+
+    if (!result) {
+      return null;
+    }
 
     return (
       <div>
-        <h1>{ title }</h1>
+        <h1>{title}</h1>
 
         <Search
-          value={ searchTerm }
-          onChange={ this.onSearchChange }
-          onSearchSubmit={ this.onSearchSubmit }
+          value={searchTerm}
+          onChange={this.onSearchChange}
+          onSubmit={this.onSearchSubmit}
         >
           Search
         </Search>
 
-        { result &&
-          <List
-            list={ result.hits }
-            pattern={ searchTerm }
-            onDimiss={ this.onDimiss }
-          />
-        }
+        {result && <List list={result.hits} onDimiss={this.onDimiss} />}
       </div>
     );
   }
