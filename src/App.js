@@ -17,21 +17,33 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY
     };
 
-    this.setSearchTopStories = this.setSearchTopStories.bind(this);
+    this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.onDimiss = this.onDimiss.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.onSearchSubmit = this.onSearchSubmit.bind(this);
+    this.setSearchTopStories = this.setSearchTopStories.bind(this);
   }
 
   setSearchTopStories(result) {
     this.setState({ result });
   }
 
-  componentDidMount() {
-    const { searchTerm } = this.state;
+  onSearchSubmit() {
+    const { searchTerm } = this.state; 
+    this.fetchSearchTopStories(searchTerm);
+  }
+
+  fetchSearchTopStories(searchTerm) {
     fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
+  }
+
+
+  componentDidMount() {
+    const { searchTerm } = this.state; 
+    this.fetchSearchTopStories(searchTerm);
 }
 
   onDimiss ( id ) {
@@ -40,8 +52,10 @@ class App extends Component {
     this.setState({ result: { ...this.state.result, hits: updateList } });
   }
 
-  onSearchChange = ( event ) => {
-    this.setState({ searchTerm: event.target.value })
+  onSearchChange =  event => {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+    
   }
 
   render() {
@@ -60,15 +74,18 @@ class App extends Component {
         <Search
           value={ searchTerm }
           onChange={ this.onSearchChange }
+          onSearchSubmit={ this.onSearchSubmit }
         >
           Search
         </Search>
 
-        <List
-          list={ result.hits }
-          pattern={ searchTerm }
-          onDimiss={ this.onDimiss }
-        />
+        { result &&
+          <List
+            list={ result.hits }
+            pattern={ searchTerm }
+            onDimiss={ this.onDimiss }
+          />
+        }
       </div>
     );
   }
