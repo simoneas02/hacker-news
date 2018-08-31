@@ -18,11 +18,12 @@ class App extends Component {
     super(props);
     this.state = {
       title: "My Title",
-      result: null,
+      results: null,
       searchTerm: DEFAULT_QUERY,
-      searchKey: ""
+      searchKey: " "
     };
 
+    this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.onDimiss = this.onDimiss.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -45,10 +46,18 @@ class App extends Component {
     this.fetchSearchTopStories(searchTerm);
   }
 
+  needsToSearchTopStories(searchTerm) {
+    return !this.state.results[searchTerm];
+  }
+
   onSearchSubmit(event) {
     const { searchTerm } = this.state;
     this.setState({ searchKey: searchTerm });
-    this.fetchSearchTopStories(searchTerm);
+
+    if (this.needsToSearchTopStories(searchTerm)) {
+      this.fetchSearchTopStories(searchTerm);
+    }
+
     event.preventDefault();
   }
 
@@ -58,24 +67,44 @@ class App extends Component {
 
   setSearchTopStories(result) {
     const { hits, page } = result;
-    const oldHits = page !== 0 ? this.state.result.hits : [];
+    const { searchKey, results } = this.state;
+    const oldHits =
+      results && results[searchKey] ? results[searchKey].hits : [];
+
     const updatedHits = [...oldHits, ...hits];
     this.setState({
-      result: { hits: updatedHits, page }
+      results: {
+        ...results,
+        [searchKey]: { hits: updatedHits, page }
+      }
     });
   }
 
   onDimiss(id) {
+    const { searchKey, results } = this.state;
+    const { hits, page } = results[searchKey];
+
     const isNotId = item => item.objectID !== id;
-    const updateList = this.state.result.hits.filter(isNotId);
-    this.setState({ result: { ...this.state.result, hits: updateList } });
+    const updatedHits = hits.filter(isNotId);
+
+    this.setState({
+      results: {
+        ...results,
+        [searchKey]: { hits: updatedHits, page }
+      }
+    });
   }
 
   render() {
-    const { title, searchTerm, result } = this.state;
-    const page = (result && result.page) || 0;
+    const { title, searchTerm, results, searchKey } = this.state;
 
-    if (!result) {
+    const page =
+      (results && results[searchKey] && results[searchKey].page) || 0;
+
+    const list =
+      (results && results[searchKey] && results[searchKey].hits) || [];
+
+    if (!results) {
       return null;
     }
 
@@ -91,11 +120,11 @@ class App extends Component {
           Search
         </Search>
 
-        {result && <List list={result.hits} onDimiss={this.onDimiss} />}
+        {results && <List list={list} onDimiss={this.onDimiss} />}
 
         <div className="interactions">
           <Button
-            onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
+            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
           >
             More
           </Button>
