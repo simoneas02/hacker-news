@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import Button from "../Button";
 
@@ -9,7 +10,7 @@ const List = ({ list, onDimiss }) => {
     return <p>Sorry, the list is empty.</p>;
   } else {
     return list.map(item => (
-      <li key={item.objectID} className='list__item'>
+      <li key={item.objectID} className="list__item">
         <h2>
           <a href={item.url} target="_blank">
             {item.title}
@@ -22,6 +23,19 @@ const List = ({ list, onDimiss }) => {
       </li>
     ));
   }
+};
+
+List.propTypes = {
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+      objectID: PropTypes.string.isRequired,
+      author: PropTypes.string,
+      url: PropTypes.string,
+      num_comments: PropTypes.number,
+      points: PropTypes.number
+    })
+  ).isRequired,
+  onDimiss: PropTypes.func
 };
 
 export default List;

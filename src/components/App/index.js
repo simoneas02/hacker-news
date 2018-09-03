@@ -1,22 +1,22 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
+import PropTypes from "prop-types";
 
 import Button from "../Button";
 import List from "../List";
 import Search from "../Search";
 
-import { 
-  DEFAULT_QUERY, 
-  DEFAULT_HPP, 
-  PATH_BASE, 
-  PATH_SEARCH, 
-  PARAM_SEARCH, 
-  PARAM_PAGE, 
+import {
+  DEFAULT_QUERY,
+  DEFAULT_HPP,
+  PATH_BASE,
+  PATH_SEARCH,
+  PARAM_SEARCH,
+  PARAM_PAGE,
   PARAM_HPP
-} from'../../constants';
+} from "../../constants";
 
 class App extends Component {
-
   _isMounted = false;
 
   constructor(props) {
@@ -38,9 +38,10 @@ class App extends Component {
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
-    axios.get(
-      `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
-    )
+    axios
+      .get(
+        `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
+      )
       .then(result => this._isMounted && this.setSearchTopStories(result.data))
       .catch(error => this._isMounted && this.setState({ error }));
   }
@@ -126,10 +127,15 @@ class App extends Component {
           Search
         </Search>
 
-        { error
-          ? <p>Something went wrong.</p>
-          : results && <ul><List list={list} onDimiss={this.onDimiss} /></ul>
-        }
+        {error ? (
+          <p>Something went wrong.</p>
+        ) : (
+          results && (
+            <ul>
+              <List list={list} onDimiss={this.onDimiss} />
+            </ul>
+          )
+        )}
 
         <div className="interactions">
           <Button
@@ -142,5 +148,13 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  title: PropTypes.string,
+  results: PropTypes.array,
+  searchTerm: PropTypes.string,
+  searchKey: PropTypes.string,
+  error: PropTypes.element
+};
 
 export default App;
