@@ -9,7 +9,7 @@ const List = ({ list, onDimiss }) => {
     return <p>Sorry, the list is empty.</p>;
   } else {
     return list.map(item => (
-      <div key={item.objectID}>
+      <li key={item.objectID} className='list__item'>
         <h2>
           <a href={item.url} target="_blank">
             {item.title}
@@ -19,7 +19,7 @@ const List = ({ list, onDimiss }) => {
         <p>{item.comments}</p>
         <span>{item.points}</span>
         <Button onClick={() => onDimiss(item.objectID)}>Dimiss</Button>
-      </div>
+      </li>
     ));
   }
 };

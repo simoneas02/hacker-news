@@ -2,7 +2,9 @@
 
 exports[`List has a valid snapshot 1`] = `
 Array [
-  <div>
+  <li
+    className="list__item"
+>
     <h2>
         <a
             href={undefined}
@@ -25,8 +27,10 @@ Array [
     >
         Dimiss
     </button>
-</div>,
-  <div>
+</li>,
+  <li
+    className="list__item"
+>
     <h2>
         <a
             href={undefined}
@@ -49,6 +53,6 @@ Array [
     >
         Dimiss
     </button>
-</div>,
+</li>,
 ]
 `;

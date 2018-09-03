@@ -128,7 +128,7 @@ class App extends Component {
 
         { error
           ? <p>Something went wrong.</p>
-          : results && <List list={list} onDimiss={this.onDimiss} />
+          : results && <ul><List list={list} onDimiss={this.onDimiss} /></ul>
         }
 
         <div className="interactions">

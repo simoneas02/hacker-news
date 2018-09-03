@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from'react-test-renderer';
+import Enzyme, {shallow} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
 import List from '.';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('List', () => {
   const props = {
@@ -26,4 +30,8 @@ describe('List', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('shows two items in list', () => {
+    const element = shallow( <List { ...props } /> );
+    expect(element.find('.list__item').length).toBe(2);
+  });
 });
