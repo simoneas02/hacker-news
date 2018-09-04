@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`List has a valid snapshot 1`] = `
+exports[`ListItem has a valid snapshot 1`] = `
 Array [
   <li
     className="list__item"

@@ -3,7 +3,8 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 import Button from "../Button";
-import List from "../List";
+import ListItem from "../ListItem";
+import { Loading } from '../Loading';
 import Search from "../Search";
 
 import {
@@ -26,7 +27,8 @@ class App extends Component {
       results: null,
       searchTerm: DEFAULT_QUERY,
       searchKey: " ",
-      error: null
+      error: null,
+      isLoading: false
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -38,6 +40,7 @@ class App extends Component {
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
+    this.setState({ isLoading: true });
     axios
       .get(
         `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
@@ -87,7 +90,8 @@ class App extends Component {
       results: {
         ...results,
         [searchKey]: { hits: updatedHits, page }
-      }
+      },
+      isLoading: false
     });
   }
 
@@ -107,7 +111,7 @@ class App extends Component {
   }
 
   render() {
-    const { title, searchTerm, results, searchKey, error } = this.state;
+    const { title, searchTerm, results, searchKey, error, isLoading } = this.state;
 
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0;
@@ -132,17 +136,20 @@ class App extends Component {
         ) : (
           results && (
             <ul>
-              <List list={list} onDimiss={this.onDimiss} />
+              <ListItem list={list} onDimiss={this.onDimiss} />
             </ul>
           )
         )}
 
         <div className="interactions">
-          <Button
-            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
-          >
-            More
-          </Button>
+          {isLoading
+            ? <Loading />
+            : <Button
+                onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+              >
+              More
+            </Button>
+          }
         </div>
       </div>
     );
@@ -154,7 +161,8 @@ App.propTypes = {
   results: PropTypes.array,
   searchTerm: PropTypes.string,
   searchKey: PropTypes.string,
-  error: PropTypes.element
+  error: PropTypes.element,
+  isLoading: PropTypes.bool
 };
 
 export default App;

@@ -4,11 +4,11 @@ import renderer from'react-test-renderer';
 import Enzyme, {shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import List from '.';
+import ListItem from '.';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-describe('List', () => {
+describe('ListItem', () => {
   const props = {
     list: [
       { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'y' },
@@ -18,20 +18,20 @@ describe('List', () => {
 
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<List { ...props } />, div);
+    ReactDOM.render(<ListItem { ...props } />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
   test('has a valid snapshot', () => {
     const component = renderer.create(
-      <List { ...props } />
+      <ListItem { ...props } />
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('shows two items in list', () => {
-    const element = shallow( <List { ...props } /> );
+    const element = shallow( <ListItem { ...props } /> );
     expect(element.find('.list__item').length).toBe(2);
   });
 });

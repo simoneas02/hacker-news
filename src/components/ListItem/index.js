@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import Button from "../Button";
 
-const List = ({ list, onDimiss }) => {
+const ListItem = ({ list, onDimiss }) => {
   if (!list) return null;
 
   if (!list.length) {
@@ -25,7 +25,7 @@ const List = ({ list, onDimiss }) => {
   }
 };
 
-List.propTypes = {
+ListItem.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
       objectID: PropTypes.string.isRequired,
@@ -38,4 +38,4 @@ List.propTypes = {
   onDimiss: PropTypes.func
 };
 
-export default List;
+export default ListItem;
