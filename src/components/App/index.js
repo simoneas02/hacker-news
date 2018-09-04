@@ -3,7 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 import Button from "../Button";
-import ListItem from "../ListItem";
+import ListWithConditionalRendering from "../List";
 import { Loading } from '../Loading';
 import Search from "../Search";
 
@@ -118,7 +118,7 @@ class App extends Component {
 
     const list =
       (results && results[searchKey] && results[searchKey].hits) || [];
-
+      
     return (
       <div>
         <h1>{title}</h1>
@@ -135,9 +135,7 @@ class App extends Component {
           <p>Something went wrong.</p>
         ) : (
           results && (
-            <ul>
-              <ListItem list={list} onDimiss={this.onDimiss} />
-            </ul>
+            <ListWithConditionalRendering list={list} onDimiss={this.onDimiss} />
           )
         )}
 
