@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Button from "../Button";
 import ListWithConditionalRendering from "../List";
-import { Loading } from '../Loading';
+import { Loading } from "../Loading";
 import Search from "../Search";
 
 import {
@@ -28,7 +28,8 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
       searchKey: " ",
       error: null,
-      isLoading: false
+      isLoading: false,
+      sortKey: "NONE"
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -37,6 +38,18 @@ class App extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
+    this.onSort = this.onSort.bind(this);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    const { searchTerm } = this.state;
+    this.setState({ searchKey: searchTerm });
+    this.fetchSearchTopStories(searchTerm);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
@@ -49,15 +62,8 @@ class App extends Component {
       .catch(error => this._isMounted && this.setState({ error }));
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-    const { searchTerm } = this.state;
-    this.setState({ searchKey: searchTerm });
-    this.fetchSearchTopStories(searchTerm);
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
+  onSort(sortKey) {
+    this.setState({ sortKey });
   }
 
   needsToSearchTopStories(searchTerm) {
@@ -111,14 +117,22 @@ class App extends Component {
   }
 
   render() {
-    const { title, searchTerm, results, searchKey, error, isLoading } = this.state;
+    const {
+      title,
+      searchTerm,
+      results,
+      searchKey,
+      error,
+      isLoading,
+      sortKey
+    } = this.state;
 
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0;
 
     const list =
       (results && results[searchKey] && results[searchKey].hits) || [];
-      
+
     return (
       <div>
         <h1>{title}</h1>
@@ -135,19 +149,25 @@ class App extends Component {
           <p>Something went wrong.</p>
         ) : (
           results && (
-            <ListWithConditionalRendering list={list} onDimiss={this.onDimiss} />
+            <ListWithConditionalRendering
+              list={list}
+              sortKey={sortKey}
+              onDimiss={this.onDimiss}
+              onSort={this.onSort}
+            />
           )
         )}
 
         <div className="interactions">
-          {isLoading
-            ? <Loading />
-            : <Button
-                onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
-              >
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <Button
+              onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+            >
               More
             </Button>
-          }
+          )}
         </div>
       </div>
     );

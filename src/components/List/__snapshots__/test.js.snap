@@ -2,6 +2,53 @@
 
 exports[`List has a valid snapshot 1`] = `
 <ul>
+  <div
+    className="table-header"
+  >
+    <span>
+      <button
+        className="button-inline button-active"
+        onClick={[Function]}
+        type="button"
+      >
+         
+        Title
+      </button>
+    </span>
+    <span>
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+         
+        Author
+      </button>
+    </span>
+    <span>
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+         
+        Comments
+      </button>
+    </span>
+    <span>
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+         
+        Points
+      </button>
+    </span>
+    <span>
+      Archive
+    </span>
+  </div>
   <li
     className="list__item"
   >
