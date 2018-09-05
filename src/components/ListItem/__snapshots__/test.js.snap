@@ -7,7 +7,7 @@ exports[`ListItem has a valid snapshot 1`] = `
   >
     <span>
       <button
-        className="button-inline button-active"
+        className="button-inline"
         onClick={[Function]}
         type="button"
       >
