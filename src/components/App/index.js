@@ -28,8 +28,7 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
       searchKey: " ",
       error: null,
-      isLoading: false,
-      sortKey: "NONE"
+      isLoading: false
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -38,7 +37,6 @@ class App extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onSearchSubmit = this.onSearchSubmit.bind(this);
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
-    this.onSort = this.onSort.bind(this);
   }
 
   componentDidMount() {
@@ -60,10 +58,6 @@ class App extends Component {
       )
       .then(result => this._isMounted && this.setSearchTopStories(result.data))
       .catch(error => this._isMounted && this.setState({ error }));
-  }
-
-  onSort(sortKey) {
-    this.setState({ sortKey });
   }
 
   needsToSearchTopStories(searchTerm) {
@@ -123,8 +117,7 @@ class App extends Component {
       results,
       searchKey,
       error,
-      isLoading,
-      sortKey
+      isLoading
     } = this.state;
 
     const page =
@@ -151,9 +144,7 @@ class App extends Component {
           results && (
             <ListWithConditionalRendering
               list={list}
-              sortKey={sortKey}
               onDimiss={this.onDimiss}
-              onSort={this.onSort}
             />
           )
         )}
