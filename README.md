@@ -23,18 +23,9 @@ Go to: [http://localhost:3000/](http://localhost:3000/)
 ## Tasks available
 - `$ yarn start`: Start the development environment server.
 - `$ yarn test`: Run the test.
-- `$ yarn build`: Build for production.
-
-## Stack
-- Task Runner: [Gulp](http://gulpjs.com/)
-- HTML Template Engine: [Pug](https://pugjs.org/api/getting-started.html)
-- CSS Preprocessor: [Stylus](http://stylus-lang.com/)
-- JS Transpiler: [Babel](http://babeljs.io/)
-- Package Manager: [Bower](https://bower.io/)
-- Webcomponents: [Polymer](https://www.polymer-project.org/1.0/)
-- Bundler: [Vulcanize](https://www.npmjs.com/package/gulp-vulcanize)
 
 ## Folders Structure
+```
 ./src  
 ├── components  
 │   ├── App  
@@ -78,6 +69,7 @@ Go to: [http://localhost:3000/](http://localhost:3000/)
 ├── registerServiceWorker.js  
 └── utils  
     └── index.js  
+```
 
 ## Contributing
 Find on our [issues](https://github.com/simoneas02/hacker-news/issues/) the next steps of the project ;)  
