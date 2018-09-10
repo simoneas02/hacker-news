@@ -42,6 +42,7 @@
     "react-addons-test-utils": "^15.6.2",
     "react-dev-utils": "^5.0.2",
     "react-dom": "^16.4.2",
+    "react-prism": "^4.3.2",
     "react-test-renderer": "^16.4.2",
     "resolve": "1.6.0",
     "style-loader": "0.19.0",
@@ -102,9 +103,9 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "@storybook/react": "^3.4.10",
     "@storybook/addon-actions": "^3.4.10",
     "@storybook/addon-links": "^3.4.10",
-    "@storybook/addons": "^3.4.10"
+    "@storybook/addons": "^3.4.10",
+    "@storybook/react": "^3.4.10"
   }
 }
