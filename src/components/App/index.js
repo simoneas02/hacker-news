@@ -15,7 +15,7 @@ import {
   PATH_SEARCH,
   PARAM_SEARCH,
   PARAM_PAGE,
-  PARAM_HPP,
+  PARAM_HPP
 } from '../../constants';
 
 class App extends Component {
@@ -30,6 +30,9 @@ class App extends Component {
       searchKey: ' ',
       error: null,
       isLoading: false,
+      obj: {
+        test: 'foiii'
+      }
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -55,7 +58,7 @@ class App extends Component {
     this.setState({ isLoading: true });
     axios
       .get(
-        `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`,
+        `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
       )
       .then(result => this._isMounted && this.setSearchTopStories(result.data))
       .catch(error => this._isMounted && this.setState({ error }));
@@ -95,8 +98,8 @@ class App extends Component {
     this.setState({
       results: {
         ...results,
-        [searchKey]: { hits: updatedHits, page },
-      },
+        [searchKey]: { hits: updatedHits, page }
+      }
     });
   }
 
@@ -107,7 +110,7 @@ class App extends Component {
       results,
       searchKey,
       error,
-      isLoading,
+      isLoading
     } = this.state;
 
     const page =
@@ -161,7 +164,7 @@ App.propTypes = {
   searchTerm: PropTypes.string,
   searchKey: PropTypes.string,
   error: PropTypes.element,
-  isLoading: PropTypes.bool,
+  isLoading: PropTypes.bool
 };
 
 export default App;
