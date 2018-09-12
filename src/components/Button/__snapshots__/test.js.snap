@@ -3,7 +3,6 @@
 exports[`Button has a valid snapshot 1`] = `
 <button
   className=""
-  onClick={undefined}
   type="button"
 />
 `;

@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { shallow, mount, render } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import App from '.';
+import Search from '../Search';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -24,8 +25,14 @@ describe('App', () => {
   });
 
   it('rendered the title', () => {
-    const element = shallow(<App />);
-    expect(element.state().title).toContain('My Title');
+    const wrapper = shallow(<App />);
+    expect(wrapper.state().title).toContain('My Title');
+  });
+
+  it('should make request to Api', () => {
+    const wrapper = mount(<App />);
+
+    // const search = wrapper.find(<Search />).find('button').simulate('click');
   });
 
   test('has a valid snapshot', () => {

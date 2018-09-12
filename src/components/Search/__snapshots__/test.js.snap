@@ -1,13 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Search has a valid snapshot 1`] = `
-<form
-  onSubmit={undefined}
->
+<form>
   <input
-    onChange={undefined}
     type="text"
-    value={undefined}
   />
   <button
     type="submit"

@@ -37,7 +37,6 @@ exports[`ListItem has a valid snapshot 1`] = `
   >
     <h2>
       <a
-        href={undefined}
         target="_blank"
       >
         1
@@ -63,7 +62,6 @@ exports[`ListItem has a valid snapshot 1`] = `
   >
     <h2>
       <a
-        href={undefined}
         target="_blank"
       >
         2

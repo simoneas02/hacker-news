@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import renderer from'react-test-renderer';
+import renderer from 'react-test-renderer';
 
 import { Loading } from '.';
 
@@ -12,8 +12,8 @@ describe('Loading', () => {
   });
 
   test('has a valid snapshot', () => {
-    const component = renderer.create( <Loading /> );
+    const component = renderer.create(<Loading />);
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
   });
-})
+});
