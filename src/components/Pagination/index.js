@@ -1,5 +1,5 @@
-import React from 'reacq';
+import React from 'react';
 
-const Pagination = () => <div>Paginatio</div>;
+const Pagination = ({ total, acitivePage }) => [1];
 
 export default Pagination;

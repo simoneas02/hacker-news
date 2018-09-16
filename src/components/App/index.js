@@ -29,10 +29,7 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
       searchKey: ' ',
       error: null,
-      isLoading: false,
-      obj: {
-        test: 'foiii'
-      }
+      isLoading: false
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
