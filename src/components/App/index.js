@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import axios from "axios";
+import PropTypes from "prop-types";
 
-import Button from '../Button';
-import ListWithConditionalRendering from '../List';
-import { Loading } from '../Loading';
-import Search from '../Search';
-import { updateSearchTopStoriesState } from '../../utils';
+import Button from "../Button";
+import ListWithConditionalRendering from "../List";
+import { Loading } from "../Loading";
+import Search from "../Search";
+import { updateSearchTopStoriesState } from "../../utils";
 
 import {
   DEFAULT_QUERY,
@@ -16,7 +16,7 @@ import {
   PARAM_SEARCH,
   PARAM_PAGE,
   PARAM_HPP
-} from '../../constants';
+} from "../../constants";
 
 class App extends Component {
   _isMounted = false;
@@ -24,10 +24,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: 'My Title',
+      title: "My Title",
       results: null,
       searchTerm: DEFAULT_QUERY,
-      searchKey: ' ',
+      searchKey: " ",
       error: null,
       isLoading: false
     };
